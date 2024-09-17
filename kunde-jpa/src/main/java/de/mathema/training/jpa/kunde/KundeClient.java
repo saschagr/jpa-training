@@ -8,9 +8,17 @@
 **********************************************************/
 package de.mathema.training.jpa.kunde;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import javax.naming.InitialContext;
 
+import com.github.javafaker.Faker;
+
 public class KundeClient {
+	
+	private static Faker faker = new Faker(Locale.GERMANY);
 
 	public static void main(String[] args) throws Exception {
 		InitialContext context = new InitialContext();
@@ -25,17 +33,46 @@ public class KundeClient {
 		anlegen(kundeRepository, "Heiko");
 		anlegen(kundeRepository, "Maxi");
 		
-		Kunde kunde = new Kunde();
-		kunde.setName("Fritzi");
-		
-		kundeRepository.aendern(1L, kunde);
+		aendern(kundeRepository, 1L, "Fritzi");
 
 		context.close();
 	}
 	
-	private static void anlegen(KundeRepository kundeRepository, String name) {
+	private static void aendern(KundeRepository kundeRepository, Long id, String name) {
 		Kunde kunde = new Kunde();
 		kunde.setName(name);
+		
+		kundeRepository.aendern(id, kunde);
+	}
+	
+	private static void anlegen(KundeRepository kundeRepository, String name) {
+		List<Telefon> telefons = new ArrayList<>();
+		telefons
+			.add(
+					Telefon
+					.builder()
+					.nummer(
+							faker.phoneNumber().phoneNumber()
+							).build());
+		telefons
+			.add(
+					Telefon
+					.builder()
+					.nummer(
+							faker.phoneNumber().phoneNumber()
+							).build());
+		
+		Kunde kunde = 
+				Kunde
+				.builder()
+				.name(name)
+				.anrede(
+						Anrede
+						.values()[
+						          faker.random().nextInt(Anrede.values().length-1)])
+				.geburtsdatum(faker.date().birthday())
+				.telefons(telefons)
+				.build();
 
 		kundeRepository.anlegen(kunde);
 	}

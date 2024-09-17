@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional.TxType;
 @Transactional(value = TxType.REQUIRED)
 public class KundenRepositoryBean implements KundeRepository {
 	
-	@PersistenceContext
+	@PersistenceContext(unitName = "kundeManagement")
 	private EntityManager entityManager;
 
 	@Override

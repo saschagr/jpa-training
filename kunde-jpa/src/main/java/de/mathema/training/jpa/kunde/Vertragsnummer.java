@@ -14,11 +14,17 @@ import java.lang.annotation.Target;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import jakarta.validation.ReportAsSingleViolation;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = {VertragsnummerConstraint.class})
+@NotNull
+@Size(min = 4)
+@ReportAsSingleViolation
 public @interface Vertragsnummer {
 
 	String message() default "{de.mathema.training.jpa.beanvalidation.vertragsnummer}";

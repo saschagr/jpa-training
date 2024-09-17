@@ -33,7 +33,7 @@ public class KundeClient {
 		anlegen(kundeRepository, "Heiko");
 		anlegen(kundeRepository, "Maxi");
 		
-		aendern(kundeRepository, 1L, "Fritzi");
+		aendern(kundeRepository, 1L, faker.name().firstName());
 
 		context.close();
 	}
@@ -69,7 +69,7 @@ public class KundeClient {
 				.anrede(
 						Anrede
 						.values()[
-						          faker.random().nextInt(Anrede.values().length-1)])
+						          faker.random().nextInt(Anrede.values().length)])
 				.geburtsdatum(faker.date().birthday())
 				.telefons(telefons)
 				.build();

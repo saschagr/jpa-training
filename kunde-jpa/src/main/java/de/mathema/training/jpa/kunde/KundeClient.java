@@ -73,8 +73,26 @@ public class KundeClient {
 				.geburtsdatum(faker.date().birthday())
 				.telefons(telefons)
 				.build();
+		
+		addVertraege(kunde);
 
 		kundeRepository.anlegen(kunde);
+	}
+	
+	private static void addVertraege(Kunde kunde) {
+		int anzahl = faker.random().nextInt(10);
+		while (anzahl > -1 ) {
+			anzahl--;
+			Vertrag vertrag =
+					Vertrag
+					.builder()
+					.vertragsnummer(faker.regexify("[0-9]{4}-[0-9]{9}"))
+					.build();
+					
+			kunde.addVertrag(vertrag);
+			vertrag.setKunde(kunde);
+		}
+		
 	}
 	
 	

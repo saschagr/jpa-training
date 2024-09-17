@@ -22,6 +22,7 @@ public class Vertrag implements Serializable {
 	@GeneratedValue
 	private Long id;
 	
+	@Vertragsnummer
 	private String vertragsnummer;
 	
 	@ManyToOne

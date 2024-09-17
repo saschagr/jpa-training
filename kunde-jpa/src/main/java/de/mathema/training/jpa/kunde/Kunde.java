@@ -18,6 +18,8 @@ import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Version;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +44,7 @@ public class Kunde implements Serializable {
 	private Anrede anrede;
 	
 	@Temporal(TemporalType.DATE)
+	@Past
 	private Date geburtsdatum;
 	
 	@ElementCollection

@@ -15,6 +15,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
@@ -40,7 +42,11 @@ import static de.mathema.training.jpa.kunde.Kunde.QUERY_FIND_KUNDEN_BY_NAME;
 @NamedQuery(
 		name = QUERY_FIND_KUNDEN_BY_NAME,
 		query = "select k from KundenEntity k where k.name = :name")
-
+@NamedEntityGraph(
+		name = "KUNDE_ALL",
+		attributeNodes = {
+				@NamedAttributeNode(value = "telefons"),
+				@NamedAttributeNode(value = "vertraege")})
 public class Kunde implements Serializable, ChangeableData {
 	
 	public static final String QUERY_FIND_KUNDEN_BY_NAME = "findKundenByName";
@@ -61,7 +67,7 @@ public class Kunde implements Serializable, ChangeableData {
 	@Past
 	private Date geburtsdatum;
 	
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	@OrderColumn
 	private List<Telefon> telefons = new ArrayList<>();
 	
@@ -71,7 +77,7 @@ public class Kunde implements Serializable, ChangeableData {
 	
 	@OneToMany(
 			mappedBy = "kunde", 
-			fetch = FetchType.EAGER, 
+			fetch = FetchType.LAZY, 
 			cascade = CascadeType.ALL)
 	private List<Vertrag> vertraege = new ArrayList<>();
 	

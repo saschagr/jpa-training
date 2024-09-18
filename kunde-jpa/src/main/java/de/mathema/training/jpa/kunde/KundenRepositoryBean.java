@@ -1,11 +1,11 @@
 package de.mathema.training.jpa.kunde;
 
 import java.util.List;
+import java.util.Map;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
@@ -57,7 +57,19 @@ public class KundenRepositoryBean implements KundeRepository {
 		
 		
 		query.setParameter(Kunde.PARAMETER_NAME, name);
+		query.setHint(
+				"jakarta.persistence.loadgraph", 
+				entityManager.getEntityGraph("KUNDE_ALL"));
 		
 		return query.getResultList();
+	}
+	
+	public Kunde findKundeById(Long id) {
+		return entityManager
+		.find(
+				Kunde.class, 
+				id, 
+				Map.of("jakarta.persistence.fetchgraph", 
+						entityManager.getEntityGraph("KUNDE_ALL")));
 	}
 }

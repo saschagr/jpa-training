@@ -4,10 +4,10 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class VertragsnummerConstraint 
-	implements ConstraintValidator<Vertragsnummer, String> {
+	implements ConstraintValidator<VertragsnummerValidation, String> {
 
 	@Override
-	public void initialize(Vertragsnummer constraintAnnotation) {
+	public void initialize(VertragsnummerValidation constraintAnnotation) {
 	}
 
 	@Override
@@ -16,3 +16,4 @@ public class VertragsnummerConstraint
 	}
 
 }
+

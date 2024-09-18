@@ -7,6 +7,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,7 +19,6 @@ import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Version;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Kunde implements Serializable {
+public class Kunde implements Serializable, ChangeableData {
 	
 	@Id
 	@GeneratedValue
@@ -60,6 +60,10 @@ public class Kunde implements Serializable {
 			fetch = FetchType.EAGER, 
 			cascade = CascadeType.ALL)
 	private List<Vertrag> vertraege = new ArrayList<>();
+	
+	@Builder.Default
+	@Embedded
+	private ChangeData changeData = new ChangeData();;
 
 	public void addVertrag(Vertrag vertrag) {
 		if (vertraege == null) {

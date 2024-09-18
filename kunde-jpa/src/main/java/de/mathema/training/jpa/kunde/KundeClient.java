@@ -66,10 +66,7 @@ public class KundeClient {
 				Kunde
 				.builder()
 				.name(name)
-				.anrede(
-						Anrede
-						.values()[
-						          faker.random().nextInt(Anrede.values().length)])
+				.anrede(faker.options().option(Anrede.class))
 				.geburtsdatum(faker.date().birthday())
 				.telefons(telefons)
 				.build();

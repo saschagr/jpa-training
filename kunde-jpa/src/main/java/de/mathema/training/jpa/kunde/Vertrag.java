@@ -2,6 +2,7 @@ package de.mathema.training.jpa.kunde;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,16 +17,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Vertrag implements Serializable {
+public class Vertrag implements Serializable, ChangeableData {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
 	
-	@Vertragsnummer
+	@VertragsnummerValidation
 	private String vertragsnummer;
 	
 	@ManyToOne
 	private Kunde kunde;
+	
+	@Builder.Default
+	@Embedded
+	private ChangeData changeData = new ChangeData();;
+
 
 }

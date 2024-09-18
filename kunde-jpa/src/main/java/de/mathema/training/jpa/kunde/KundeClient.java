@@ -34,6 +34,9 @@ public class KundeClient {
 		anlegen(kundeRepository, "Maxi");
 		
 		aendern(kundeRepository, 1L, faker.name().firstName());
+		
+		List<Kunde> kunden = kundeRepository.findKundenByName("Fritz");
+		System.out.println("Kunden: " + kunden);
 
 		context.close();
 	}

@@ -1,8 +1,12 @@
 package de.mathema.training.jpa.kunde;
 
+import java.util.List;
+
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
 
@@ -40,4 +44,20 @@ public class KundenRepositoryBean implements KundeRepository {
 		
 	}
 	*/
+	
+	@Override
+	public List<Kunde> findKundenByName(String name) {
+		TypedQuery<Kunde> query = entityManager
+				.createNamedQuery(Kunde.QUERY_FIND_KUNDEN_BY_NAME, Kunde.class);
+		/*
+		entityManager.createQuery(
+				"select k from KundenEntity k where k.name = :name",
+				Kunde.class);
+		*/
+		
+		
+		query.setParameter(Kunde.PARAMETER_NAME, name);
+		
+		return query.getResultList();
+	}
 }

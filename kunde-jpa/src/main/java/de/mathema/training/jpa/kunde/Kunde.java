@@ -1,6 +1,7 @@
 package de.mathema.training.jpa.kunde;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +15,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Version;
@@ -25,13 +28,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import static de.mathema.training.jpa.kunde.Kunde.QUERY_FIND_KUNDEN_BY_NAME;
 
 @Data
-@Entity
+@Entity(name = "KundenEntity")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "KundenTabelle")
+
+@NamedQuery(
+		name = QUERY_FIND_KUNDEN_BY_NAME,
+		query = "select k from KundenEntity k where k.name = :name")
+
 public class Kunde implements Serializable, ChangeableData {
+	
+	public static final String QUERY_FIND_KUNDEN_BY_NAME = "findKundenByName";
+
+	public static final String PARAMETER_NAME = "name";
 	
 	@Id
 	@GeneratedValue
@@ -47,7 +61,7 @@ public class Kunde implements Serializable, ChangeableData {
 	@Past
 	private Date geburtsdatum;
 	
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@OrderColumn
 	private List<Telefon> telefons = new ArrayList<>();
 	

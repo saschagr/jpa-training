@@ -7,9 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
@@ -30,8 +32,14 @@ public class Vertrag implements Serializable, ChangeableData {
 	private Kunde kunde;
 	
 	@Builder.Default
+	@Getter
 	@Embedded
 	private ChangeData changeData = new ChangeData();;
+	
+	@Version
+	@Getter
+	private Integer version;
+
 
 
 }

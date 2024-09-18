@@ -62,6 +62,7 @@ public class Kunde implements Serializable, ChangeableData {
 	private List<Vertrag> vertraege = new ArrayList<>();
 	
 	@Builder.Default
+	@Getter
 	@Embedded
 	private ChangeData changeData = new ChangeData();;
 

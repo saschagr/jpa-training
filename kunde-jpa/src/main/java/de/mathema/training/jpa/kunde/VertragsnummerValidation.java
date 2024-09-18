@@ -26,7 +26,7 @@ import jakarta.validation.constraints.Size;
 				VertragsnummerConstraint.class, 
 				VertragsnummerVertragsnummerConstraint.class })
 @NotNull
-@Size(min = 4)
+//@Size(min = 4)
 @ReportAsSingleViolation
 public @interface VertragsnummerValidation {
 

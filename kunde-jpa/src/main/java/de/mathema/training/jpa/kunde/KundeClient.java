@@ -83,7 +83,11 @@ public class KundeClient {
 			Vertrag vertrag =
 					Vertrag
 					.builder()
-					.vertragsnummer(faker.regexify("[0-9]{4}-[0-9]{9}"))
+					.vertragsnummer(
+							Vertragsnummer
+							.builder()
+							.nummer(faker.regexify("[0-9]{4}-[0-9]{9}"))
+							.build())
 					.build();
 					
 			kunde.addVertrag(vertrag);

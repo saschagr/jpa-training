@@ -2,6 +2,7 @@ package de.mathema.training.jpa.kunde;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,10 @@ public class Vertrag implements Serializable, ChangeableData {
 	private Long id;
 	
 	@VertragsnummerValidation
-	private String vertragsnummer;
+	@Convert(
+			converter = VertragsnummerPrefixConverter.class
+	)
+	private Vertragsnummer vertragsnummer;
 	
 	@ManyToOne
 	private Kunde kunde;
